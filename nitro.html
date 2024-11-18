@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NitroType Hack</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: black;
+            color: white;
+        }
+        .controls {
+            width: 200px;
+            height: 100%;
+            position: absolute;
+            right: 0;
+            background-color: #2E3141;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        .controls button, .controls input {
+            margin-bottom: 10px;
+        }
+        .controls button {
+            background-color: #D62F3A;
+            border: none;
+            color: white;
+            padding: 10px;
+            cursor: pointer;
+        }
+        .controls button:hover {
+            background-color: #A2222C;
+        }
+        #webView {
+            width: calc(100% - 200px);
+            height: 100%;
+            background-color: black;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+    </style>
+</head>
+<body>
+    <iframe id="webView" src="https://nitrotype.com" frameborder="0"></iframe>
+    <div class="controls">
+        <button id="startButton" disabled>Start Cheat</button>
+        <label>
+            Typing Rate:
+            <input type="range" id="typingRateSlider" min="10" max="350" value="100">
+        </label>
+        <label>
+            Typing Rate Variance:
+            <input type="range" id="typingRateVarianceSlider" min="0" max="15" value="0">
+        </label>
+        <label>
+            Accuracy:
+            <input type="range" id="accuracySlider" min="0" max="100" value="100">
+        </label>
+        <label>
+            Accuracy Variance:
+            <input type="range" id="accuracyVarianceSlider" min="0" max="15" value="0">
+        </label>
+        <label>
+            <input type="checkbox" id="autostart" checked> Auto Start
+        </label>
+        <label>
+            <input type="checkbox" id="autogame"> Auto Game
+        </label>
+        <label>
+            <input type="checkbox" id="usenitros"> Use Nitros
+        </label>
+        <label>
+            <input type="checkbox" id="godmode"> God Mode
+        </label>
+        <button id="discord">Join Discord</button>
+    </div>
+    <script>
+        const webView = document.getElementById('webView');
+        const startButton = document.getElementById('startButton');
+        const typingRateSlider = document.getElementById('typingRateSlider');
+        const typingRateVarianceSlider = document.getElementById('typingRateVarianceSlider');
+        const accuracySlider = document.getElementById('accuracySlider');
+        const accuracyVarianceSlider = document.getElementById('accuracyVarianceSlider');
+        const autostart = document.getElementById('autostart');
+        const autogame = document.getElementById('autogame');
+        const usenitros = document.getElementById('usenitros');
+        const godmode = document.getElementById('godmode');
+        const discord = document.getElementById('discord');
+
+        let config = {
+            typingRate: 100,
+            typingRateVariance: 0,
+            accuracy: 100,
+            accuracyVariance: 0,
+            autoStart: true,
+            autoGame: false,
+            useNitros: false,
+            godMode: false,
+            cheatRunning: false
+        };
+
+        function simulateTyping(text) {
+            config.cheatRunning = true;
+            const letters = text.split('');
+            let typingRate = calculateVariance(config.typingRate, config.typingRateVariance, 10, 350);
+            let accuracy = config.godMode ? 100 : calculateVariance(config.accuracy, config.accuracyVariance, 0, 100);
+            let index = 0;
+
+            function typeNext() {
+                if (index >= letters.length) {
+                    config.cheatRunning = false;
+                    if (config.autoGame) location.reload();
+                    return;
+                }
+                const delay = typingRate + Math.sin(index) * 10;
+                if (Math.random() > accuracy / 100) {
+                    letters[index] = '_';
+                }
+                index++;
+                setTimeout(typeNext, delay);
+            }
+            typeNext();
+        }
+
+        function calculateVariance(base, variance, min, max) {
+            const value = base + (Math.random() * 2 - 1) * variance;
+            return Math.min(Math.max(value, min), max);
+        }
+
+        function injectAutoStart() {
+            simulateTyping('Example AutoStart Injected Text');
+        }
+
+        discord.addEventListener('click', () => {
+            window.open('https://discord.gg/', '_blank');
+        });
+
+        startButton.addEventListener('click', () => {
+            simulateTyping('Example Manual Start Text');
+        });
+
+        autostart.addEventListener('change', () => {
+            startButton.disabled = autostart.checked;
+        });
+
+        godmode.addEventListener('change', () => {
+            if (godmode.checked) {
+                if (!confirm("God Mode removes all typing limits and uses max accuracy. It's highly likely your account will be banned if you use it, continue?")) {
+                    godmode.checked = false;
+                } else {
+                    config.godMode = true;
+                }
+            } else {
+                config.godMode = false;
+            }
+        });
+
+        typingRateSlider.addEventListener('input', () => {
+            config.typingRate = parseInt(typingRateSlider.value);
+        });
+
+        typingRateVarianceSlider.addEventListener('input', () => {
+            config.typingRateVariance = parseInt(typingRateVarianceSlider.value);
+        });
+
+        accuracySlider.addEventListener('input', () => {
+            config.accuracy = parseInt(accuracySlider.value);
+        });
+
+        accuracyVarianceSlider.addEventListener('input', () => {
+            config.accuracyVariance = parseInt(accuracyVarianceSlider.value);
+        });
+
+        autogame.addEventListener('change', () => {
+            config.autoGame = autogame.checked;
+        });
+
+        usenitros.addEventListener('change', () => {
+            config.useNitros = usenitros.checked;
+        });
+
+        if (config.autoStart) {
+            injectAutoStart();
+        }
+    </script>
+</body>
+</html>
