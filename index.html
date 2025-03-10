@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>NexaTech - Home</title>
+</head>
+<body>
+    <header>
+        <img src="logo.png" alt="NexaTech Logo" class="logo">
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="services.html">Services</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+    </header>
+    <main>
+        <section class="content">
+            <h1>Welcome to NexaTech</h1>
+            <p>At NexaTech, we are at the forefront of technological innovation, specializing in quantum computing, artificial intelligence, and blockchain solutions. Our mission is to empower businesses and individuals with cutting-edge tools that redefine what’s possible in the digital age.</p>
+            <a href="services.html" class="button">Explore Our Services</a>
+
+            <div class="feature-card">
+                <h2>Quantum Computing</h2>
+                <p>Quantum computing is no longer a distant dream—it’s here, and it’s transforming industries. At NexaTech, we develop quantum systems that solve problems previously thought impossible. From optimizing supply chains to advancing drug discovery, our quantum solutions are unlocking new possibilities.</p>
+            </div>
+
+            <div class="feature-card">
+                <h2>Artificial Intelligence</h2>
+                <p>Artificial intelligence is reshaping the way we live and work. Our AI solutions are designed to integrate seamlessly into your business, providing insights, automating processes, and enhancing decision-making. Whether you’re in healthcare, finance, or retail, we have the tools to help you thrive.</p>
+            </div>
+
+            <div class="feature-card">
+                <h2>Blockchain Technology</h2>
+                <p>Security and transparency are critical in today’s digital world. Our blockchain solutions offer decentralized, tamper-proof systems that protect your data and streamline transactions. From cryptocurrency to smart contracts, we’re building the future of secure digital ecosystems.</p>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2025 NexaTech. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // JavaScript for hover effects
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.feature-card');
+            cards.forEach(card => {
+                card.addEventListener('mouseover', () => {
+                    card.style.transform = 'translateY(-5px)';
+                    card.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.5)';
+                });
+                card.addEventListener('mouseout', () => {
+                    card.style.transform = 'translateY(0)';
+                    card.style.boxShadow = '0 2px 4px rgba(0, 0, 0, 0.3)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
